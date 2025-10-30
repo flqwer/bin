@@ -1,0 +1,10 @@
+#!/bin/sh
+
+[ "$#" -eq 0 ] && echo "no theme" && exit 1
+
+dir="$HOME/etc/col" # tweak this!
+ln -sf "$dir/$1" $HOME/.colors # and this!
+xrdb -load ~/.Xresources
+
+magick -size 1x1 xc:"$(xrdb -get background)" -modulate 70,100,100 -alpha off -depth 8 -colorspace sRGB -format "#%[hex:u.p{0,0}]\n" info: | \
+xargs xsetroot -solid
